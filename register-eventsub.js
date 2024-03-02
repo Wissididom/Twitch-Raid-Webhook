@@ -18,7 +18,8 @@ async function registerRaidEvent(fromBroadcasterUserId) {
     },
     transport: {
       method: "webhook",
-      callback: process.env.VERCEL_URL ?? process.env.URL ?? 'https://localhost',
+      callback:
+        process.env.VERCEL_URL ?? process.env.URL ?? "https://localhost",
       secret: process.env.EVENTSUB_SECRET,
     },
   };
