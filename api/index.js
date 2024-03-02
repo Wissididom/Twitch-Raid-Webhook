@@ -107,26 +107,19 @@ app.post("/", async (req, res) => {
     let notification = JSON.parse(req.body);
     switch (req.headers[MESSAGE_TYPE]) {
       case MESSAGE_TYPE_NOTIFICATION:
-        /*
-        let channels = process.env.TWITCH_CHANNELS.split(",");
-        for (let i = 0; i < channels.length; i++) {
-        	let user = await getUser(channels[i].toLowerCase());
-        	await sendMessage(user.id, process.env.SENDER_ID, process.env.TEXT_MESSAGE);
-        }
-        */
         if (notification.subscription.type == "channel.raid") {
           await getToken();
           /*
-        	{
-        	    "to_broadcaster_user_id": "37176521",
-        	    "to_broadcaster_user_login": "testBroadcaster",
-        	    "to_broadcaster_user_name": "testBroadcaster",
-        	    "from_broadcaster_user_id": "87390462",
-        	    "from_broadcaster_user_login": "testFromUser",
-        	    "from_broadcaster_user_name": "testFromUser",
-        	    "viewers": 87409
-        	}
-        	*/
+          {
+              "to_broadcaster_user_id": "37176521",
+              "to_broadcaster_user_login": "testBroadcaster",
+              "to_broadcaster_user_name": "testBroadcaster",
+              "from_broadcaster_user_id": "87390462",
+              "from_broadcaster_user_login": "testFromUser",
+              "from_broadcaster_user_name": "testFromUser",
+              "viewers": 87409
+            }
+          */
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
