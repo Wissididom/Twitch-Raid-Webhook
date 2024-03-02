@@ -1,6 +1,7 @@
 require("dotenv").config();
 const crypto = require("crypto");
 const express = require("express");
+const helmet = require('helmet');
 
 const app = express();
 
@@ -19,6 +20,8 @@ const MESSAGE_TYPE_REVOCATION = "revocation";
 
 // Prepend this string to the HMAC that's created from the message
 const HMAC_PREFIX = "sha256=";
+
+app.use(helmet());
 
 app.use(
   express.raw({
