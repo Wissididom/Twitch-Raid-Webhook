@@ -50,6 +50,5 @@ let dcfInterval = setInterval(async () => {
     console.log(
       `Got Device Code Flow Tokens for Streamer ${user.display_name} (${user.login})`,
     );
-    await authenticated();
   }
 }, 1000);

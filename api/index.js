@@ -2,7 +2,7 @@ import "dotenv/config";
 import crypto from "crypto";
 import express from "express";
 import helmet from "helmet";
-import { getUser as getUserImpl } from "./utils.js";
+import { getUser as getUserImpl } from "../utils.js";
 
 const app = express();
 
@@ -34,10 +34,11 @@ async function sendMessage(broadcasterId, senderId, message) {
     sender_id: senderId,
     message,
   };
+  console.log(`sendMessage:${JSON.stringify(data)}`);
   return await fetch("https://api.twitch.tv/helix/chat/messages", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${tokens.access_token}`,
+      Authorization: `Bearer ${token.access_token}`,
       "Client-ID": process.env.TWITCH_CLIENT_ID,
       "Content-Type": "application/json",
     },
@@ -114,6 +115,7 @@ app.post("/", async (req, res) => {
         }
         */
         if (notification.subscription.type == "channel.raid") {
+          await getToken();
           /*
         	{
         	    "to_broadcaster_user_id": "37176521",
@@ -126,6 +128,8 @@ app.post("/", async (req, res) => {
         	}
         	*/
           await sendMessage(
+            notification.event.from_broadcaster_user_id,
+            process.env.SENDER_ID,
             `${notification.event.to_broadcaster_user_name}: https://www.twitch.tv/${notification.event.to_broadcaster_user_login}`,
           );
         } else {
