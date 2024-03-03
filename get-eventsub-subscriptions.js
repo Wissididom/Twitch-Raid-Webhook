@@ -7,28 +7,36 @@ let token = {
 };
 
 // https://dev.twitch.tv/docs/api/reference/#get-eventsub-subscriptions
-async function getSubscriptions(status = null, type = null, userId = null, after = null) {
+async function getSubscriptions(
+  status = null,
+  type = null,
+  userId = null,
+  after = null,
+) {
   let data = [];
   if (status) {
-  	data.push(`status=${encodeURIComponent(status)}`);
+    data.push(`status=${encodeURIComponent(status)}`);
   }
   if (type) {
-  	data.push(`type=${encodeURIComponent(type)}`);
+    data.push(`type=${encodeURIComponent(type)}`);
   }
   if (userId) {
-  	data.push(`user_id=${encodeURIComponent(userId)}`);
+    data.push(`user_id=${encodeURIComponent(userId)}`);
   }
   if (after) {
-  	data.push(`after=${encodeURIComponent(after)}`);
+    data.push(`after=${encodeURIComponent(after)}`);
   }
-  let url = data.length < 1 ? "https://api.twitch.tv/helix/eventsub/subscriptions" : `https://api.twitch.tv/helix/eventsub/subscriptions?${data.join('&')}`;
+  let url =
+    data.length < 1
+      ? "https://api.twitch.tv/helix/eventsub/subscriptions"
+      : `https://api.twitch.tv/helix/eventsub/subscriptions?${data.join("&")}`;
   return await fetch(url, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token.access_token}`,
       "Client-ID": process.env.TWITCH_CLIENT_ID,
       "Content-Type": "application/json",
-    }
+    },
   }).then(async (res) => {
     // 200 OK = Successfully retrieved the subscriptions
     // 400 Bad Request
