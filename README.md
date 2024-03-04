@@ -5,7 +5,7 @@
 - Twitch Client ID
 - Twitch Client Secret
 - Twitch User ID of the account that should send the messages
-- EventSub Secret (must be between 1 and 100 chars in length)
+- EventSub Secret (must be between 1 and 100 chars in length and can be freely chosen by you)
 - Port on the server where Twitch sends the webhooks to (doesn't matter for vercel)
 - Hostname or IP where Twitch sends the webhooks to (`URL` environment variable or value in the `.env` file)
 
