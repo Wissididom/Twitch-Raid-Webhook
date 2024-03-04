@@ -7,7 +7,8 @@
 - Twitch Client Secret
 - Twitch User ID of the account that should send the messages
 - EventSub Secret (must be between 1 and 100 chars in length and can be freely chosen by you)
-- Port on the server where Twitch sends the webhooks to (doesn't matter for vercel)
+- Port on the server where Twitch sends the webhooks to
+  - only matters for installation on your server; doesn't matter for deployments on Vercel
 - Hostname or IP where Twitch sends the webhooks to (`URL` environment variable or value in the `.env` file)
 
 ## Setup
@@ -29,5 +30,5 @@
 2. Import your Fork to Vercel
 3. Create the environment variables from `example.env` on Vercel's settings page
 4. Redeploy to make sure Vercel uses those environment variables
-5. Do step 4, 5 and 7 locally with the same values that you have specified on Vercel as environment variables
+5. Do step 4, 5 and 7 from the `Hosted on your server` section locally with the same values that you have specified on Vercel as environment variables
 6. Twitch now tries to send an verification request to your specified URL and if that succeeds will send you a POST request on each outgoing raid
