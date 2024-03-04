@@ -39,7 +39,7 @@ export default async function getAccountAccess(chatter) {
       `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&scopes=${encodeURIComponent(scopes)}&device_code=${tokens.device_code}&grant_type=urn:ietf:params:oauth:grant-type:device_code`,
       {
         method: "POST",
-      }
+      },
     );
     if (tokenResponse.status == 400) return; // Probably authorization pending
     if (tokenResponse.status >= 200 && tokenResponse.status < 300) {
