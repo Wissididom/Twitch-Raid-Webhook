@@ -50,7 +50,7 @@ export default async function getAccountAccess(chatter) {
       let user = await getUser(tokens);
       clearInterval(dcfInterval);
       console.log(
-        `Got Device Code Flow Tokens for Streamer ${user.display_name} (${user.login})`,
+        `Got Device Code Flow Tokens for ${chatter ? "Chatter" : "Streamer"} ${user.display_name} (${user.login})`,
       );
     }
   }, 1000);
