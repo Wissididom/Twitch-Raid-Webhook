@@ -1,6 +1,6 @@
 import { getUser as getUserImpl } from "./utils.js";
 
-async function getUser(login) {
+async function getUser(tokens, login) {
   return getUserImpl(process.env.TWITCH_CLIENT_ID, tokens.access_token, login);
 }
 
@@ -47,7 +47,7 @@ export default async function getAccountAccess(chatter) {
       let tokenJson = await tokenResponse.json();
       tokens.access_token = tokenJson.access_token;
       tokens.refresh_token = tokenJson.refresh_token;
-      let user = await getUser();
+      let user = await getUser(tokens);
       clearInterval(dcfInterval);
       console.log(
         `Got Device Code Flow Tokens for Streamer ${user.display_name} (${user.login})`,
