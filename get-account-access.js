@@ -29,7 +29,7 @@ export default async function getAccountAccess(chatter) {
     let dcfJson = await dcf.json();
     tokens.device_code = dcfJson.device_code;
     tokens.user_code = dcfJson.user_code;
-    tokens.verfication_uri = dcfJson.verification_uri;
+    tokens.verification_uri = dcfJson.verification_uri;
     console.log(
       `Open ${tokens.verification_uri} in a browser and enter ${tokens.user_code} there!`,
     );
