@@ -134,10 +134,7 @@ app.post("/", async (req, res) => {
             "from_broadcaster_user_name",
             notification.event.from_broadcaster_user_name
           );
-          message = message.replace(
-            "viewers",
-            notification.event.viewers
-          );
+          message = message.replace("viewers", notification.event.viewers);
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
