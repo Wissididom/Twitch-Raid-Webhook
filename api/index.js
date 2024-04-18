@@ -111,30 +111,30 @@ app.post("/", async (req, res) => {
           await getToken();
           let message = process.env.MESSAGE;
           message = message.replace(
-            "to_broadcaster_user_id",
+            "<to_broadcaster_user_id>",
             notification.event.to_broadcaster_user_id
           );
           message = message.replace(
-            "to_broadcaster_user_login",
+            "<to_broadcaster_user_login>",
             notification.event.to_broadcaster_user_login
           );
           message = message.replace(
-            "to_broadcaster_user_name",
+            "<to_broadcaster_user_name>",
             notification.event.to_broadcaster_user_name
           );
           message = message.replace(
-            "from_broadcaster_user_id",
+            "<from_broadcaster_user_id>",
             notification.event.from_broadcaster_user_id
           );
           message = message.replace(
-            "from_broadcaster_user_login",
+            "<from_broadcaster_user_login>",
             notification.event.from_broadcaster_user_login
           );
           message = message.replace(
-            "from_broadcaster_user_name",
+            "<from_broadcaster_user_name>",
             notification.event.from_broadcaster_user_name
           );
-          message = message.replace("viewers", notification.event.viewers);
+          message = message.replace("<viewers>", notification.event.viewers);
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
