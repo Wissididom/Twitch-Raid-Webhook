@@ -1,4 +1,4 @@
 import "dotenv/config";
-import getAccountAccess from "./get-account-access.js";
+import { getStreamerAccess } from "./get-account-access.js";
 
-await getAccountAccess(false);
+await getStreamerAccess();

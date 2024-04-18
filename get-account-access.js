@@ -4,13 +4,22 @@ async function getUser(tokens, login) {
   return getUserImpl(process.env.TWITCH_CLIENT_ID, tokens.access_token, login);
 }
 
-export default async function getAccountAccess(chatter) {
-  let scopes;
-  if (chatter) {
-    scopes = encodeURIComponent(["user:write:chat", "user:bot"].join(" "));
-  } else {
-    scopes = encodeURIComponent(["channel:bot"].join(" "));
-  }
+export async function getStreamerAccess() {
+  let scopes = encodeURIComponent(["channel:bot"].join(" "));
+  return await getAccountAccess(scopes);
+}
+
+export async function getChatterAccess() {
+  let scopes = encodeURIComponent(["user:write:chat", "user:bot"].join(" "));
+  return await getAccountAccess(scopes);
+}
+
+export async function getStreamerAndChatterAccess() {
+  let scopes = encodeURIComponent(["channel:bot", "user:write:chat", "user:bot"].join(" "));
+  return await getAccountAccess(scopes);
+}
+
+async function getAccountAccess(scopes) {
   let tokens = {
     access_token: null,
     refresh_token: null,
