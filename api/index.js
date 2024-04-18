@@ -120,10 +120,18 @@ app.post("/", async (req, res) => {
               "viewers": 87409
             }
           */
+          let message = process.env.MESSAGE;
+          message = message.replace('to_broadcaster_user_id', notification.event.to_broadcaster_user_id);
+          message = message.replace('to_broadcaster_user_login', notification.event.to_broadcaster_user_login);
+          message = message.replace('to_broadcaster_user_name', notification.event.to_broadcaster_user_name);
+          message = message.replace('from_broadcaster_user_id', notification.event.from_broadcaster_user_id);
+          message = message.replace('from_broadcaster_user_login', notification.event.from_broadcaster_user_login);
+          message = message.replace('from_broadcaster_user_name', notification.event.from_broadcaster_user_name);
+          message = message.replace('viewers', notification.event.viewers);
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
-            `${notification.event.to_broadcaster_user_name}: https://www.twitch.tv/${notification.event.to_broadcaster_user_login}`,
+            message,
           );
         } else {
           console.log(`Event type: ${notification.subscription.type}`);
