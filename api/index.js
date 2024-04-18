@@ -109,36 +109,36 @@ app.post("/", async (req, res) => {
       case MESSAGE_TYPE_NOTIFICATION:
         if (notification.subscription.type == "channel.raid") {
           await getToken();
-          let message = process.env.MESSAGE;
-          message = message.replace(
+          let msg = process.env.MESSAGE;
+          msg = msg.replace(
             "<to_broadcaster_user_id>",
             notification.event.to_broadcaster_user_id,
           );
-          message = message.replace(
+          msg = msg.replace(
             "<to_broadcaster_user_login>",
             notification.event.to_broadcaster_user_login,
           );
-          message = message.replace(
+          msg = msg.replace(
             "<to_broadcaster_user_name>",
             notification.event.to_broadcaster_user_name,
           );
-          message = message.replace(
+          msg = msg.replace(
             "<from_broadcaster_user_id>",
             notification.event.from_broadcaster_user_id,
           );
-          message = message.replace(
+          msg = msg.replace(
             "<from_broadcaster_user_login>",
             notification.event.from_broadcaster_user_login,
           );
-          message = message.replace(
+          msg = msg.replace(
             "<from_broadcaster_user_name>",
             notification.event.from_broadcaster_user_name,
           );
-          message = message.replace("<viewers>", notification.event.viewers);
+          msg = msg.replace("<viewers>", notification.event.viewers);
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
-            message,
+            msg,
           );
         } else {
           console.log(`Event type: ${notification.subscription.type}`);
