@@ -4,13 +4,30 @@ async function getUser(tokens, login) {
   return getUserImpl(process.env.TWITCH_CLIENT_ID, tokens.access_token, login);
 }
 
-export default async function getAccountAccess(chatter) {
-  let scopes;
-  if (chatter) {
-    scopes = encodeURIComponent(["user:write:chat", "user:bot"].join(" "));
-  } else {
-    scopes = encodeURIComponent(["channel:bot"].join(" "));
-  }
+export async function getStreamerAccess() {
+  return await getAccountAccess(
+    "Streamer",
+    encodeURIComponent(["channel:bot"].join(" ")),
+  );
+}
+
+export async function getChatterAccess() {
+  return await getAccountAccess(
+    "Chatter",
+    encodeURIComponent(["user:write:chat", "user:bot"].join(" ")),
+  );
+}
+
+export async function getStreamerAndChatterAccess() {
+  return await getAccountAccess(
+    "Streamer and Chatter",
+    encodeURIComponent(
+      ["channel:bot", "user:write:chat", "user:bot"].join(" "),
+    ),
+  );
+}
+
+async function getAccountAccess(forWhom, scopes) {
   let tokens = {
     access_token: null,
     refresh_token: null,
@@ -50,7 +67,7 @@ export default async function getAccountAccess(chatter) {
       let user = await getUser(tokens);
       clearInterval(dcfInterval);
       console.log(
-        `Got Device Code Flow Tokens for ${chatter ? "Chatter" : "Streamer"} ${user.display_name} (${user.login})`,
+        `Got Device Code Flow Tokens for ${forWhom} ${user.display_name} (${user.login})`,
       );
     }
   }, 1000);
