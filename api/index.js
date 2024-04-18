@@ -109,25 +109,35 @@ app.post("/", async (req, res) => {
       case MESSAGE_TYPE_NOTIFICATION:
         if (notification.subscription.type == "channel.raid") {
           await getToken();
-          /*
-          {
-              "to_broadcaster_user_id": "37176521",
-              "to_broadcaster_user_login": "testBroadcaster",
-              "to_broadcaster_user_name": "testBroadcaster",
-              "from_broadcaster_user_id": "87390462",
-              "from_broadcaster_user_login": "testFromUser",
-              "from_broadcaster_user_name": "testFromUser",
-              "viewers": 87409
-            }
-          */
           let message = process.env.MESSAGE;
-          message = message.replace('to_broadcaster_user_id', notification.event.to_broadcaster_user_id);
-          message = message.replace('to_broadcaster_user_login', notification.event.to_broadcaster_user_login);
-          message = message.replace('to_broadcaster_user_name', notification.event.to_broadcaster_user_name);
-          message = message.replace('from_broadcaster_user_id', notification.event.from_broadcaster_user_id);
-          message = message.replace('from_broadcaster_user_login', notification.event.from_broadcaster_user_login);
-          message = message.replace('from_broadcaster_user_name', notification.event.from_broadcaster_user_name);
-          message = message.replace('viewers', notification.event.viewers);
+          message = message.replace(
+            "to_broadcaster_user_id",
+            notification.event.to_broadcaster_user_id
+          );
+          message = message.replace(
+            "to_broadcaster_user_login",
+            notification.event.to_broadcaster_user_login
+          );
+          message = message.replace(
+            "to_broadcaster_user_name",
+            notification.event.to_broadcaster_user_name
+          );
+          message = message.replace(
+            "from_broadcaster_user_id",
+            notification.event.from_broadcaster_user_id
+          );
+          message = message.replace(
+            "from_broadcaster_user_login",
+            notification.event.from_broadcaster_user_login
+          );
+          message = message.replace(
+            "from_broadcaster_user_name",
+            notification.event.from_broadcaster_user_name
+          );
+          message = message.replace(
+            "viewers",
+            notification.event.viewers
+          );
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
