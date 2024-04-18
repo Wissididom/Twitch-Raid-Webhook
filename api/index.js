@@ -109,21 +109,36 @@ app.post("/", async (req, res) => {
       case MESSAGE_TYPE_NOTIFICATION:
         if (notification.subscription.type == "channel.raid") {
           await getToken();
-          /*
-          {
-              "to_broadcaster_user_id": "37176521",
-              "to_broadcaster_user_login": "testBroadcaster",
-              "to_broadcaster_user_name": "testBroadcaster",
-              "from_broadcaster_user_id": "87390462",
-              "from_broadcaster_user_login": "testFromUser",
-              "from_broadcaster_user_name": "testFromUser",
-              "viewers": 87409
-            }
-          */
+          let msg = process.env.MESSAGE;
+          msg = msg.replace(
+            "<to_broadcaster_user_id>",
+            notification.event.to_broadcaster_user_id,
+          );
+          msg = msg.replace(
+            "<to_broadcaster_user_login>",
+            notification.event.to_broadcaster_user_login,
+          );
+          msg = msg.replace(
+            "<to_broadcaster_user_name>",
+            notification.event.to_broadcaster_user_name,
+          );
+          msg = msg.replace(
+            "<from_broadcaster_user_id>",
+            notification.event.from_broadcaster_user_id,
+          );
+          msg = msg.replace(
+            "<from_broadcaster_user_login>",
+            notification.event.from_broadcaster_user_login,
+          );
+          msg = msg.replace(
+            "<from_broadcaster_user_name>",
+            notification.event.from_broadcaster_user_name,
+          );
+          msg = msg.replace("<viewers>", notification.event.viewers);
           await sendMessage(
             notification.event.from_broadcaster_user_id,
             process.env.SENDER_ID,
-            `${notification.event.to_broadcaster_user_name}: https://www.twitch.tv/${notification.event.to_broadcaster_user_login}`,
+            msg,
           );
         } else {
           console.log(`Event type: ${notification.subscription.type}`);
