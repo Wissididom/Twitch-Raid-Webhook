@@ -5,21 +5,21 @@ async function getUser(tokens, login) {
 }
 
 export async function getStreamerAccess() {
-  let scopes = encodeURIComponent(["channel:bot"].join(" "));
+  let scopes = encodeURIComponent("Streamer", ["channel:bot"].join(" "));
   return await getAccountAccess(scopes);
 }
 
 export async function getChatterAccess() {
-  let scopes = encodeURIComponent(["user:write:chat", "user:bot"].join(" "));
+  let scopes = encodeURIComponent("Chatter", ["user:write:chat", "user:bot"].join(" "));
   return await getAccountAccess(scopes);
 }
 
 export async function getStreamerAndChatterAccess() {
-  let scopes = encodeURIComponent(["channel:bot", "user:write:chat", "user:bot"].join(" "));
+  let scopes = encodeURIComponent("Streamer and Chatter", ["channel:bot", "user:write:chat", "user:bot"].join(" "));
   return await getAccountAccess(scopes);
 }
 
-async function getAccountAccess(scopes) {
+async function getAccountAccess(forWhom, scopes) {
   let tokens = {
     access_token: null,
     refresh_token: null,
@@ -59,7 +59,7 @@ async function getAccountAccess(scopes) {
       let user = await getUser(tokens);
       clearInterval(dcfInterval);
       console.log(
-        `Got Device Code Flow Tokens for ${chatter ? "Chatter" : "Streamer"} ${user.display_name} (${user.login})`,
+        `Got Device Code Flow Tokens for ${forWhom} ${user.display_name} (${user.login})`,
       );
     }
   }, 1000);
