@@ -12,7 +12,7 @@ export async function getStreamerAccess() {
 export async function getChatterAccess() {
   let scopes = encodeURIComponent(
     "Chatter",
-    ["user:write:chat", "user:bot"].join(" ")
+    ["user:write:chat", "user:bot"].join(" "),
   );
   return await getAccountAccess(scopes);
 }
@@ -20,7 +20,7 @@ export async function getChatterAccess() {
 export async function getStreamerAndChatterAccess() {
   let scopes = encodeURIComponent(
     "Streamer and Chatter",
-    ["channel:bot", "user:write:chat", "user:bot"].join(" ")
+    ["channel:bot", "user:write:chat", "user:bot"].join(" "),
   );
   return await getAccountAccess(scopes);
 }
