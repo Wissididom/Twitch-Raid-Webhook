@@ -5,24 +5,26 @@ async function getUser(tokens, login) {
 }
 
 export async function getStreamerAccess() {
-  let scopes = encodeURIComponent("Streamer", ["channel:bot"].join(" "));
-  return await getAccountAccess(scopes);
+  return await getAccountAccess(
+    "Streamer",
+    encodeURIComponent(["channel:bot"].join(" ")),
+  );
 }
 
 export async function getChatterAccess() {
-  let scopes = encodeURIComponent(
+  return await getAccountAccess(
     "Chatter",
-    ["user:write:chat", "user:bot"].join(" "),
+    encodeURIComponent(["user:write:chat", "user:bot"].join(" ")),
   );
-  return await getAccountAccess(scopes);
 }
 
 export async function getStreamerAndChatterAccess() {
-  let scopes = encodeURIComponent(
+  return await getAccountAccess(
     "Streamer and Chatter",
-    ["channel:bot", "user:write:chat", "user:bot"].join(" "),
+    encodeURIComponent(
+      ["channel:bot", "user:write:chat", "user:bot"].join(" "),
+    ),
   );
-  return await getAccountAccess(scopes);
 }
 
 async function getAccountAccess(forWhom, scopes) {
