@@ -2,7 +2,7 @@ import "dotenv/config";
 import crypto from "crypto";
 import express from "express";
 import helmet from "helmet";
-import { getUser as getUserImpl } from "../utils.js";
+import { getUser as getUserImpl } from "./utils.js";
 
 const app = express();
 
