@@ -15,7 +15,8 @@
   "dependencies": {
     "dotenv": "^17.4.0",
     "express": "^5.2.1",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "yesno": "^0.4.0"
   },
   "devDependencies": {
     "prettier": "^3.8.1"
