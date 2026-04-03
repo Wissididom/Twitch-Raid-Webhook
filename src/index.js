@@ -173,7 +173,6 @@ app.post("/", async (req, res) => {
             notification.event.from_broadcaster_user_name,
           );
           msg = msg.replace("<viewers>", notification.event.viewers);
-          notification.event.from_broadcaster_user_id = '636874779';
           if (process.env.USE_ANNOUNCEMENTS?.toLowerCase() == "true")
             await sendChatAnnouncement(
               notification.event.from_broadcaster_user_id,
