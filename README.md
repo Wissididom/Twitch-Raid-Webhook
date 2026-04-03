@@ -1,8 +1,8 @@
-# Twitch-Raid-Webhook
+# Twitch-Raid-EventSub-Notifier
 
 ## Prerequisites
 
-- NodeJS v18+
+- NodeJS v24+
 - Twitch Client ID
 - Twitch Client Secret
 - Twitch User ID of the account that should send the messages
@@ -16,7 +16,7 @@
 ### Hosted on your server
 
 1. Clone this repo
-2. Do `npm i` or `npm install` to install `dotenv`, `express` and `helmet`
+2. Do `npm i` or `npm install` to install `dotenv`, `express`, `helmet` and `yesno`
 3. Copy `example.env` to `.env` and fill out it's values
 4. Run `node get-chatter-access.js` and authorize with the account that should send the message
 5. Run `node get-streamer-access.js` and authorize with the account of the streamer in whose channel you want to send the message
