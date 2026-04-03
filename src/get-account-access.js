@@ -11,20 +11,47 @@ export async function getStreamerAccess() {
   );
 }
 
-export async function getChatterAccess() {
-  return await getAccountAccess(
-    "Chatter",
-    encodeURIComponent(["user:write:chat", "user:bot"].join(" ")),
-  );
+export async function getChatterAccess(announcements) {
+  if (announcements === undefined || announcements === null)
+    announcements = true;
+  if (announcements)
+    return await getAccountAccess(
+      "Chatter",
+      encodeURIComponent(
+        ["user:write:chat", "user:bot", "moderator:manage:announcements"].join(
+          " ",
+        ),
+      ),
+    );
+  else
+    return await getAccountAccess(
+      "Chatter",
+      encodeURIComponent(["user:write:chat", "user:bot"].join(" ")),
+    );
 }
 
-export async function getStreamerAndChatterAccess() {
-  return await getAccountAccess(
-    "Streamer and Chatter",
-    encodeURIComponent(
-      ["channel:bot", "user:write:chat", "user:bot"].join(" "),
-    ),
-  );
+export async function getStreamerAndChatterAccess(announcements) {
+  if (announcements === undefined || announcements === null)
+    announcements = true;
+  if (announcements)
+    return await getAccountAccess(
+      "Streamer and Chatter",
+      encodeURIComponent(
+        [
+          "channel:bot",
+          "user:write:chat",
+          "user:bot",
+          "moderator:manage:announcements",
+        ].join(" "),
+      ),
+    );
+  else
+    return await getAccountAccess(
+      "Streamer and Chatter",
+      encodeURIComponent(
+        ["channel:bot", "user:write:chat", "user:bot"].join(" "),
+      ),
+    );
 }
 
 async function getAccountAccess(forWhom, scopes) {

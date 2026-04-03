@@ -28,13 +28,13 @@ let token = {
   token_type: null,
 };
 
-async function sendMessage(broadcasterId, senderId, message) {
+async function sendChatMessage(broadcasterId, senderId, message) {
   let data = {
     broadcaster_id: broadcasterId,
     sender_id: senderId,
     message,
   };
-  console.log(`sendMessage:${JSON.stringify(data)}`);
+  console.log(`sendChatMessage:${JSON.stringify(data)}`);
   return await fetch("https://api.twitch.tv/helix/chat/messages", {
     method: "POST",
     headers: {
@@ -52,6 +52,44 @@ async function sendMessage(broadcasterId, senderId, message) {
     console.log(
       `${senderId} - ${res.status}:\n${JSON.stringify(await res.json(), null, 2)}`,
     );
+    if (res.status >= 200 && res.status < 300) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+async function sendChatAnnouncement(
+  broadcasterId,
+  senderId,
+  message,
+  color,
+  forSourceOnly,
+) {
+  let data = {
+    message,
+    color,
+    for_source_only: forSourceOnly,
+  };
+  console.log(`sendChatAnnouncement:${JSON.stringify(data)}`);
+  return await fetch(
+    `https://api.twitch.tv/helix/chat/announcements?broadcaster_id=${broadcasterId}&moderator_id=${senderId}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+        "Client-ID": process.env.TWITCH_CLIENT_ID,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  ).then(async (res) => {
+    // 204 No Content = Successfully sent the announcement
+    // 400 Bad Request
+    // 401 Unauthorized
+    // 429 = The sender has exceeded the number of announcements they may send to this broadcaster_id within a given window.
+    console.log(`${senderId} - ${res.status}:\n${await res.text()}`);
     if (res.status >= 200 && res.status < 300) {
       return true;
     } else {
@@ -135,11 +173,21 @@ app.post("/", async (req, res) => {
             notification.event.from_broadcaster_user_name,
           );
           msg = msg.replace("<viewers>", notification.event.viewers);
-          await sendMessage(
-            notification.event.from_broadcaster_user_id,
-            process.env.SENDER_ID,
-            msg,
-          );
+          notification.event.from_broadcaster_user_id = '636874779';
+          if (process.env.USE_ANNOUNCEMENTS?.toLowerCase() == "true")
+            await sendChatAnnouncement(
+              notification.event.from_broadcaster_user_id,
+              process.env.SENDER_ID,
+              msg,
+              undefined,
+              true,
+            );
+          else
+            await sendChatMessage(
+              notification.event.from_broadcaster_user_id,
+              process.env.SENDER_ID,
+              msg,
+            );
         } else {
           console.log(`Event type: ${notification.subscription.type}`);
           console.log(JSON.stringify(notification.event, null, 4));
