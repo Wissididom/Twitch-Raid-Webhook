@@ -23,7 +23,7 @@ jobs:
     name: "Build"
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: "wissididom/twitch-raid-webhook"
+      IMAGE_NAME: "wissididom/twitch-raid-eventsub-notifier"
 
     steps:
       - uses: actions/checkout@v6
